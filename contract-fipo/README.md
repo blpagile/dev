@@ -56,8 +56,8 @@ curl -sSL https://install.python-poetry.org | python3 -
 # Install project dependencies
 poetry install
 
-# Activate the virtual environment
-poetry shell
+# Activate the virtual environment (created in the project directory)
+source .venv/bin/activate
 ```
 
 ### 4. Install System Dependencies (macOS)
@@ -156,6 +156,8 @@ API_PORT=8000
 #### Basic Usage
 
 ```bash
+export PATH="$HOME/.local/bin:$PATH"
+
 # Analyze a PDF contract
 poetry run python -m contract_fipo.main --file path/to/contract.pdf
 
@@ -172,6 +174,8 @@ poetry run python -m contract_fipo.main --file contract.pdf --output results.jso
 #### Database Operations
 
 ```bash
+export PATH="$HOME/.local/bin:$PATH"
+
 # List all analyzed contracts
 poetry run python -m contract_fipo.main --list-contracts
 
@@ -194,6 +198,8 @@ poetry run python -m contract_fipo.main --file contract.pdf --verbose
 #### Start the API Server
 
 ```bash
+export PATH="$HOME/.local/bin:$PATH"
+
 # Development server
 poetry run uvicorn contract_fipo.api:app --reload --host 0.0.0.0 --port 8000
 

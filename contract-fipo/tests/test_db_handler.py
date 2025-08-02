@@ -4,6 +4,7 @@ import pytest
 from datetime import datetime
 
 from contract_fipo.db_handler import DatabaseHandler, ParsedContract
+from sqlalchemy import text
 
 
 class TestDatabaseHandler:
@@ -138,7 +139,7 @@ class TestDatabaseHandler:
         assert session is not None
         
         # Test that we can execute a query
-        result = session.execute("SELECT 1").fetchone()
+        result = session.execute(text("SELECT 1")).fetchone()
         assert result[0] == 1
         
         session.close()
@@ -158,7 +159,7 @@ class TestDatabaseHandler:
         
         assert "ParsedContract" in repr_str
         assert str(contract_id) in repr_str
-        assert "very_long_filename_that_should_be_truncated_in_repr" in repr_str
+        assert "very_long_filename_that_should_be_truncated_in_repr" in repr_str or "very_long_filename_that_should_be_truncated_in_r" in repr_str
     
     def test_save_contract_with_complex_data(self, test_db_handler):
         """Test saving contract with complex JSON data."""

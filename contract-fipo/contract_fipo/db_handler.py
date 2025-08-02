@@ -3,7 +3,7 @@
 import logging
 from datetime import datetime
 from typing import Dict, Any, Optional
-from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, JSON
+from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, JSON, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from .config import settings
@@ -213,7 +213,7 @@ class DatabaseHandler:
         """
         try:
             session = self.get_session()
-            session.execute("SELECT 1")
+            session.execute(text("SELECT 1"))
             session.close()
             logger.info("Database connection test successful")
             return True
