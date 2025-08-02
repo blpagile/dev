@@ -1,0 +1,29 @@
+MASTER SERVICES AGREEMENT
+
+This Master Services Agreement ("MSA") is effective as of August 1, 2024 ("Effective Date"), by and between Global Tech Inc., with its principal office at 123 Tech Lane, Silicon Valley, CA 94000 ("Client"), and Quantum Solutions Ltd., with its registered office at 456 Innovation Drive, London, UK EC1Y 8SY ("Provider"). The Client's technical lead is Dr. Alan Turing, reachable at alan.turing@globaltech.example.
+
+1.  **Services and Statements of Work (SOW).**
+    1.1. The Provider shall perform the services ("Services") and deliver the deliverables ("Deliverables") as described in one or more Statements of Work ("SOW") that will be executed by both parties and will be incorporated herein by reference.
+    1.2. In the event of a conflict between the terms of this MSA and an SOW, the terms of the SOW shall prevail for that specific SOW only.
+
+2.  **Fees and Payment.**
+    2.1. Client will pay Provider the fees set forth in each SOW. Unless otherwise specified in an SOW, Provider will invoice Client monthly.
+    2.2. Invoices are due and payable within thirty (30) days of the invoice date. Late payments will accrue interest at a rate of 1.5% per month or the highest rate permitted by law, whichever is lower. Client's primary billing contact is finance-dept@globaltech.example.
+
+3.  **Intellectual Property.**
+    3.1. "Pre-existing IP" means any intellectual property owned by a party prior to the Effective Date. Each party retains all rights, title, and interest in its Pre-existing IP.
+    3.2. "Developed IP" means any intellectual property created by the Provider in the course of performing the Services. Subject to full payment of the fees due, the Client shall own all rights, title, and interest in the Developed IP.
+
+4.  **Confidentiality.**
+    4.1. Each party agrees to hold the other's Confidential Information in strict confidence. Confidential Information does not include information that: (a) is or becomes publicly known through no fault of the receiving party; (b) was in the receiving party's possession prior to disclosure; or (c) is independently developed by the receiving party.
+
+5.  **Warranties and Limitation of Liability.**
+    5.1. Provider warrants that the Services will be performed in a professional and workmanlike manner.
+    5.2. EXCEPT FOR BREACHES OF CONFIDENTIALITY OR INDEMNIFICATION OBLIGATIONS, IN NO EVENT SHALL EITHER PARTY'S AGGREGATE LIABILITY ARISING OUT OF THIS MSA EXCEED THE TOTAL FEES PAID BY CLIENT TO PROVIDER IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM.
+
+6.  **Term and Termination.**
+    6.1. This MSA commences on the Effective Date and will continue until terminated by either party with ninety (90) days written notice.
+    6.2. Either party may terminate this MSA immediately if the other party breaches a material provision and fails to cure such breach within thirty (30) days of receiving written notice. All notices should be sent to legal@globaltech.example and legal-notice@quantumsolutions.example.
+
+This agreement is governed by the laws of the State of California, USA. IP Address for server access: 192.168.1.100.
+
