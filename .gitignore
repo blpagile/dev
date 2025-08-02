@@ -1,3 +1,9 @@
+# Secrets and local configuration
+# Ensure that .env files containing secrets are not committed.
+.env
+.env.*
+!.env.template
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.pyc
@@ -20,6 +26,7 @@ pip-delete-this-directory.txt
 # Unit test / coverage reports
 .coverage
 .tox/
+.pytest_cache/
 .nox/
 
 # Virtual environment
@@ -40,3 +47,4 @@ Thumbs.db
 *.log
 *.sqlite3
 *.bak
+celerybeat-schedule
