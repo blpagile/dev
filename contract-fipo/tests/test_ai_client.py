@@ -129,7 +129,7 @@ class TestGrokClient:
             
             # Verify API call parameters
             call_args = mock_client.chat.completions.create.call_args
-            assert call_args[1]['model'] == "grok-beta"
+            assert call_args[1]['model'] == "grok-3-mini"
             assert call_args[1]['temperature'] == 0.1
             assert call_args[1]['max_tokens'] == 4000
             assert len(call_args[1]['messages']) == 2

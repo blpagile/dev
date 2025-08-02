@@ -61,7 +61,7 @@ class GrokClient:
         
         try:
             response = self.client.chat.completions.create(
-                model="grok-beta",  # Use the appropriate Grok model
+                model="grok-3-mini",  # Use the appropriate Grok model
                 messages=[
                     {
                         "role": "system",
