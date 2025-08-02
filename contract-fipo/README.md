@@ -60,6 +60,21 @@ poetry install
 source .venv/bin/activate
 ```
 
+### 4. Using run_with_env.sh for Commands
+
+To ensure that all commands are run within the correct virtual environment, use the provided `run_with_env.sh` script. This script will attempt to use Poetry if installed, or activate the local virtual environment.
+
+```bash
+# Example of running a command with the virtual environment
+./run_with_env.sh pytest
+
+# Running the application
+./run_with_env.sh python -m contract_fipo.main --file path/to/contract.pdf
+
+# Running the API server
+./run_with_env.sh uvicorn contract_fipo.api:app --reload --host 0.0.0.0 --port 8000
+```
+
 ### 4. Install System Dependencies (macOS)
 
 ```bash
@@ -159,16 +174,16 @@ API_PORT=8000
 export PATH="$HOME/.local/bin:$PATH"
 
 # Analyze a PDF contract
-poetry run python -m contract_fipo.main --file path/to/contract.pdf
+./run_with_env.sh python -m contract_fipo.main --file path/to/contract.pdf
 
 # Analyze a text file
-poetry run python -m contract_fipo.main --file path/to/contract.txt
+./run_with_env.sh python -m contract_fipo.main --file path/to/contract.txt
 
 # Analyze text directly
-poetry run python -m contract_fipo.main --text "This is a contract between John Doe and Jane Smith..."
+./run_with_env.sh python -m contract_fipo.main --text "This is a contract between John Doe and Jane Smith..."
 
 # Save results to a file
-poetry run python -m contract_fipo.main --file contract.pdf --output results.json
+./run_with_env.sh python -m contract_fipo.main --file contract.pdf --output results.json
 ```
 
 #### Database Operations
@@ -177,20 +192,20 @@ poetry run python -m contract_fipo.main --file contract.pdf --output results.jso
 export PATH="$HOME/.local/bin:$PATH"
 
 # List all analyzed contracts
-poetry run python -m contract_fipo.main --list-contracts
+./run_with_env.sh python -m contract_fipo.main --list-contracts
 
 # Get specific contract details
-poetry run python -m contract_fipo.main --get-contract 123
+./run_with_env.sh python -m contract_fipo.main --get-contract 123
 
 # Test database connection
-poetry run python -m contract_fipo.main --test-db
+./run_with_env.sh python -m contract_fipo.main --test-db
 ```
 
 #### Verbose Output
 
 ```bash
 # Enable detailed logging
-poetry run python -m contract_fipo.main --file contract.pdf --verbose
+./run_with_env.sh python -m contract_fipo.main --file contract.pdf --verbose
 ```
 
 ### Web API
@@ -201,10 +216,10 @@ poetry run python -m contract_fipo.main --file contract.pdf --verbose
 export PATH="$HOME/.local/bin:$PATH"
 
 # Development server
-poetry run uvicorn contract_fipo.api:app --reload --host 0.0.0.0 --port 8000
+./run_with_env.sh uvicorn contract_fipo.api:app --reload --host 0.0.0.0 --port 8000
 
 # Production server
-poetry run uvicorn contract_fipo.api:app --host 0.0.0.0 --port 8000 --workers 4
+./run_with_env.sh uvicorn contract_fipo.api:app --host 0.0.0.0 --port 8000 --workers 4
 ```
 
 #### API Endpoints
@@ -327,17 +342,17 @@ poetry run mypy contract_fipo/
 ### Run All Tests
 
 ```bash
-# Run all tests
-poetry run pytest
+# Run all tests using the environment script
+./run_with_env.sh pytest
 
 # Run with coverage
-poetry run pytest --cov=contract_fipo
+./run_with_env.sh pytest --cov=contract_fipo
 
 # Run specific test file
-poetry run pytest tests/test_parser.py
+./run_with_env.sh pytest tests/test_parser.py
 
 # Run with verbose output
-poetry run pytest -v
+./run_with_env.sh pytest -v
 ```
 
 ### Test Categories

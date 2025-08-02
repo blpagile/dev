@@ -4,45 +4,41 @@ import pytest
 import json
 import tempfile
 import os
-from unittest.mock import Mock, patch
+from unittest.mock import Mock, patch, create_autospec
 from fastapi.testclient import TestClient
 
 from contract_fipo.api import app
+from contract_fipo.main import ContractAnalyzer
 
 
 @pytest.fixture
-def client(mock_analyzer):
-    """Test client fixture with mocked analyzer."""
-    with patch('contract_fipo.api.analyzer', mock_analyzer):
-        from fastapi.testclient import TestClient
-        print(f"Using TestClient from: {TestClient.__module__}.{TestClient.__name__}")
-        try:
-            return TestClient(app)
-        except TypeError:
-            # Fallback for older FastAPI versions or different initialization
-            return TestClient(app.router)
+def client():
+    print(f"Using TestClient from: {TestClient.__module__}.{TestClient.__name__}")
+    """Test client fixture."""
+    return TestClient(app)
 
 
 @pytest.fixture
 def mock_analyzer():
     """Mock analyzer fixture."""
-    with patch('contract_fipo.api.analyzer') as mock:
-        mock_instance = Mock()
-        mock_instance.db_handler.test_connection.return_value = True
-        mock_instance.analyze_file.return_value = {
-            "success": True,
-            "contract_id": 123,
-            "analysis": {"contract_summary": {"type": "Test Contract"}},
-            "pii_entities_found": 2
-        }
-        mock_instance.analyze_text.return_value = {
-            "success": True,
-            "contract_id": 124,
-            "analysis": {"contract_summary": {"type": "Text Contract"}},
-            "pii_entities_found": 1
-        }
-        mock.return_value = mock_instance
-        yield mock_instance
+    # Using autospec=True ensures the mock has the same methods/attributes
+    # as the real ContractAnalyzer class, making tests more robust.
+    mock_instance = create_autospec(ContractAnalyzer, instance=True)
+
+    mock_instance.db_handler.test_connection.return_value = True
+    mock_instance.analyze_file.return_value = {
+        "success": True,
+        "contract_id": 123,
+        "analysis": {"contract_summary": {"type": "Test Contract"}},
+        "pii_entities_found": 2
+    }
+    mock_instance.analyze_text.return_value = {
+        "success": True,
+        "contract_id": 124,
+        "analysis": {"contract_summary": {"type": "Text Contract"}},
+        "pii_entities_found": 1
+    }
+    return mock_instance
 
 
 class TestAPIEndpoints:
@@ -289,14 +285,9 @@ class TestAPIEndpoints:
     
     def test_database_handler_not_available(self, client):
         """Test API behavior when database handler is not available."""
-        from contract_fipo.api import app, get_db_handler
-        # Override the dependency to return None for db_handler
-        app.dependency_overrides[get_db_handler] = lambda: None
-        try:
+        with patch('contract_fipo.api.get_db_handler', return_value=None):
             response = client.get("/contracts")
+            
             assert response.status_code == 500
             data = response.json()
             assert "Database handler not available" in data["detail"]
-        finally:
-            # Clear the dependency override after the test
-            app.dependency_overrides.clear()

@@ -8,6 +8,8 @@ packages = [{include = "contract_fipo"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
+httpx = {version = "0.27.0", extras = ["http2"]}  # Specific version to fix compatibility issues with FastAPI TestClient
+starlette = "0.37.2"  # Specific version to ensure compatibility with FastAPI
 pdfplumber = "^0.10.0"
 nltk = "^3.8.1"
 spacy = "^3.7.2"
@@ -17,7 +19,7 @@ openai = "^1.12.0"
 sqlalchemy = "^2.0.25"
 psycopg2-binary = "^2.9.9"
 uvicorn = "^0.27.0"
-fastapi = "^0.109.0"
+fastapi = "0.111.0"  # Specific version to fix TypeError issues with TestClient
 tenacity = "^8.2.3"
 celery = "^5.3.6"
 redis = "^5.0.1"

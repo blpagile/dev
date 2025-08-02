@@ -1,5 +1,11 @@
 """Pytest configuration and fixtures."""
 
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file at the project root
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
+
 import pytest
 import tempfile
 import os
@@ -17,11 +23,11 @@ from contract_fipo.ai_client import GrokClient
 def test_settings():
     """Test settings fixture."""
     return Settings(
-        xai_api_key="test_key",
-        database_url="sqlite:///:memory:",
-        redis_url="redis://localhost:6379/1",
-        debug=True,
-        log_level="DEBUG"
+        xai_api_key=os.getenv('XAI_API_KEY', 'test_key'),
+        database_url=os.getenv('DATABASE_URL', 'sqlite:///:memory:'),
+        redis_url=os.getenv('REDIS_URL', 'redis://localhost:6379/1'),
+        debug=bool(os.getenv('DEBUG', 'True') == 'True'),
+        log_level=os.getenv('LOG_LEVEL', 'DEBUG')
     )
 
 
