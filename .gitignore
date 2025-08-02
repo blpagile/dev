@@ -1,0 +1,42 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.egg-info/
+.Python
+build/
+dist/
+develop-eggs/
+eggs/
+sdist/
+var/
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.coverage
+.tox/
+.nox/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Editors
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+.Trashes
+Thumbs.db
+
+# Misc
+*.log
+*.sqlite3
+*.bak
