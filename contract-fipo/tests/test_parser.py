@@ -70,7 +70,7 @@ class TestDocumentParser:
         
         assert "\x00" not in result
         assert "\x08" not in result
-        assert "Normal textmore text" in result
+        assert "Normal text more text" in result
     
     def test_unicode_handling(self, document_parser):
         """Test handling of Unicode characters."""

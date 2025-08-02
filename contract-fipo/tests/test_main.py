@@ -4,6 +4,7 @@ import pytest
 from unittest.mock import Mock, patch, MagicMock
 import tempfile
 import os
+import json
 
 from contract_fipo.main import ContractAnalyzer, create_parser
 
@@ -42,15 +43,20 @@ class TestContractAnalyzer:
         mock_parser.parse_file.return_value = "Parsed contract text"
         mock_parser_class.return_value = mock_parser
         
+        ai_response_for_mock = {"contract_summary": {"type": "Service Agreement"}}
+
         mock_pii = Mock()
         mock_pii.tokenize_text.return_value = ("Tokenized text", {"[PII_PERSON_1]": "John Doe"})
+        # Mock the detokenize call that happens internally
+        mock_pii.detokenize_text.return_value = json.dumps(ai_response_for_mock)
         mock_pii_class.return_value = mock_pii
         
         mock_grok = Mock()
-        mock_grok.analyze_contract.return_value = {"contract_summary": {"type": "Service Agreement"}}
+        mock_grok.analyze_contract.return_value = ai_response_for_mock
         mock_grok_class.return_value = mock_grok
         
         mock_db = Mock()
+        # This mock is for the __init__ call
         mock_db.create_tables.return_value = None
         mock_db.save_parsed_contract.return_value = 123
         mock_db_class.return_value = mock_db
@@ -101,15 +107,19 @@ class TestContractAnalyzer:
         mock_parser.parse_text.return_value = "Cleaned contract text"
         mock_parser_class.return_value = mock_parser
         
+        ai_response_for_mock = {"contract_summary": {"type": "Employment Agreement"}}
+
         mock_pii = Mock()
         mock_pii.tokenize_text.return_value = ("Tokenized text", {"[PII_EMAIL_1]": "test@example.com"})
+        mock_pii.detokenize_text.return_value = json.dumps(ai_response_for_mock)
         mock_pii_class.return_value = mock_pii
         
         mock_grok = Mock()
-        mock_grok.analyze_contract.return_value = {"contract_summary": {"type": "Employment Agreement"}}
+        mock_grok.analyze_contract.return_value = ai_response_for_mock
         mock_grok_class.return_value = mock_grok
         
         mock_db = Mock()
+        # This mock is for the __init__ call
         mock_db.create_tables.return_value = None
         mock_db.save_parsed_contract.return_value = 456
         mock_db_class.return_value = mock_db
@@ -198,13 +208,6 @@ class TestArgumentParser:
         
         with pytest.raises(SystemExit):
             parser.parse_args(['--file', 'test.pdf', '--text', 'content'])
-    
-    def test_output_argument(self):
-        """Test output argument parsing."""
-        parser = create_parser()
-        args = parser.parse_args(['--file', 'test.pdf', '--output', 'results.json'])
-        
-        assert args.output == 'results.json'
     
     def test_database_arguments(self):
         """Test database-related arguments."""

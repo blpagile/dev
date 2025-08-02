@@ -136,7 +136,11 @@ class DocumentParser:
         if not text:
             return ""
         
-        # Remove excessive whitespace
+        # Remove special characters that might interfere with processing
+        # Replace them with spaces to avoid concatenating words
+        text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]', ' ', text)
+        
+        # Remove excessive whitespace (after removing special characters)
         text = re.sub(r'\s+', ' ', text)
         
         # Remove leading/trailing whitespace
@@ -144,9 +148,6 @@ class DocumentParser:
         
         # Normalize line breaks
         text = re.sub(r'\n\s*\n', '\n\n', text)
-        
-        # Remove special characters that might interfere with processing
-        text = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]', '', text)
         
         logger.debug(f"Cleaned text: {len(text)} characters")
         return text

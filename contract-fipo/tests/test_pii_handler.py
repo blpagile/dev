@@ -16,8 +16,8 @@ class TestPIIHandler:
         # Mock Presidio analyzer results
         mock_results = [
             Mock(start=8, end=16, entity_type='PERSON'),  # John Doe
-            Mock(start=20, end=39, entity_type='EMAIL_ADDRESS'),  # john.doe@email.com
-            Mock(start=48, end=62, entity_type='PHONE_NUMBER')  # (555) 123-4567
+            Mock(start=20, end=38, entity_type='EMAIL_ADDRESS'),  # john.doe@email.com
+            Mock(start=47, end=61, entity_type='PHONE_NUMBER')  # (555) 123-4567
         ]
         
         with patch.object(pii_handler.analyzer, 'analyze', return_value=mock_results):

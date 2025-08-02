@@ -195,44 +195,47 @@ Examples:
         """
     )
     
-    # Input options (mutually exclusive)
-    input_group = parser.add_mutually_exclusive_group(required=True)
-    input_group.add_argument(
+    # Create a main action group that requires at least one argument
+    main_group = parser.add_mutually_exclusive_group(required=True)
+    
+    # Input options (file and text are mutually exclusive within the main group)
+    input_subgroup = main_group.add_mutually_exclusive_group()
+    input_subgroup.add_argument(
         '--file', '-f',
         type=str,
         help='Path to the contract file (PDF or text)'
     )
-    input_group.add_argument(
+    input_subgroup.add_argument(
         '--text', '-t',
         type=str,
         help='Contract text content as a string'
     )
     
-    # Output options
-    parser.add_argument(
-        '--output', '-o',
-        type=str,
-        help='Output file path for results (JSON format)'
-    )
-    
-    # Database options
-    parser.add_argument(
+    # Database options (part of main group)
+    main_group.add_argument(
         '--list-contracts',
         action='store_true',
         help='List all analyzed contracts'
     )
-    parser.add_argument(
+    main_group.add_argument(
         '--get-contract',
         type=int,
         metavar='ID',
         help='Retrieve a specific contract by ID'
     )
     
-    # Utility options
-    parser.add_argument(
+    # Utility options (part of main group)
+    main_group.add_argument(
         '--test-db',
         action='store_true',
         help='Test database connection'
+    )
+    
+    # Output options (not part of main group, can be used with any main option)
+    parser.add_argument(
+        '--output', '-o',
+        type=str,
+        help='Output file path for results (JSON format)'
     )
     parser.add_argument(
         '--verbose', '-v',
@@ -284,6 +287,9 @@ def main():
             else:
                 print(f"Contract with ID {args.get_contract} not found")
             return 0
+        
+        # At this point, we know one of the main arguments was provided
+        # If it's not a utility command, we need file or text input
         
         # Handle analysis commands
         result = None
